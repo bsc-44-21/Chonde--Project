@@ -85,4 +85,14 @@ const Header = () => {
             </a>
             <div className="mt-4 pt-4 border-t border-neutral-border px-1">
               <Link to="/signin" className="w-full bg-status-completed hover:bg-emerald-700 text-white px-5 py-3.5 rounded-lg font-bold shadow-sm transition-colors block text-center text-lg" onClick={() => setIsMobileMenuOpen(false)}>
-                S
+                Sign In
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
+
+export default Header;
