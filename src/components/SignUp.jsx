@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { User, Mail, Lock, MapPin, Building2, ArrowRight } from 'lucide-react';
 import { malawiData } from '../data/malawiData';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [selectedRegion, setSelectedRegion] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [selectedConstituency, setSelectedConstituency] = useState('');
-  
+
   const [districts, setDistricts] = useState([]);
   const [constituencies, setConstituencies] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Simulate signup logic...
+    navigate('/signin');
+  };
 
   // Handle Region Change
   useEffect(() => {
@@ -47,7 +55,7 @@ const SignUp = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-2xl">
         <div className="bg-white py-12 px-6 shadow-2xl sm:rounded-3xl border border-neutral-border sm:px-12">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Full Name */}
               <div>
