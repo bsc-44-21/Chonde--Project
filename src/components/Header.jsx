@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Home, FolderGit2, FileText, Bell, Menu, X } from 'lucide-react';
+import { Home, FolderGit2, FileText, Bell, Menu, X, User, LogOut, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleReportClick = (e) => {
@@ -15,6 +15,12 @@ const Header = () => {
     } else {
       navigate('/signin');
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -52,8 +58,13 @@ const Header = () => {
             </button>
           </nav>
 
-          {/* Right Side: Notification & Sign In */}
+          {/* Right Side: Notification & Auth */}
           <div className="hidden md:flex items-center space-x-6">
+            {user && (
+              <Link to="/dashboard" className="flex items-center text-neutral-textSec hover:text-black font-black text-xs uppercase tracking-widest gap-2">
+                <LayoutDashboard size={18} /> Dashboard
+              </Link>
+            )}
             <button className="relative text-neutral-textSec hover:text-primary-dark transition-colors p-1" title="Notifications">
               <Bell size={22} />
               <span className="absolute top-0 right-0 flex h-2.5 w-2.5">
@@ -61,9 +72,29 @@ const Header = () => {
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-status-delayed"></span>
               </span>
             </button>
-            <Link to="/signin" className="bg-status-completed hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg font-medium shadow-sm transition-colors text-sm">
-              Sign In
-            </Link>
+            
+            {user ? (
+              <div className="flex items-center gap-4 border-l border-gray-200 pl-6 h-10">
+                <div className="flex flex-col items-end">
+                  <span className="text-[10px] font-black text-black leading-none">{user.name}</span>
+                  <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest mt-0.5">{user.role}</span>
+                </div>
+                <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white">
+                  <User size={20} />
+                </div>
+                <button 
+                  onClick={handleLogout}
+                  className="p-2 hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-lg transition-all"
+                  title="Log Out"
+                >
+                  <LogOut size={20} />
+                </button>
+              </div>
+            ) : (
+              <Link to="/signin" className="bg-status-completed hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg font-medium shadow-sm transition-colors text-sm">
+                Sign In
+              </Link>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -92,6 +123,11 @@ const Header = () => {
             <Link to="/" className="flex items-center text-primary-dark font-medium px-3 py-3 bg-neutral-bg rounded-lg" onClick={() => setIsMobileMenuOpen(false)}>
               <Home size={20} className="mr-3" /> Home
             </Link>
+            {user && (
+              <Link to="/dashboard" className="flex items-center text-neutral-textMain font-black px-3 py-3 hover:bg-neutral-bg rounded-lg transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                <LayoutDashboard size={20} className="mr-3" /> Dashboard
+              </Link>
+            )}
             <a href="/#projects" className="flex items-center text-neutral-textMain font-medium px-3 py-3 hover:bg-neutral-bg rounded-lg transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
               <FolderGit2 size={20} className="mr-3" /> Projects
             </a>
@@ -102,9 +138,29 @@ const Header = () => {
               <FileText size={20} className="mr-3" /> Report
             </button>
             <div className="mt-4 pt-4 border-t border-neutral-border px-1">
-              <Link to="/signin" className="w-full bg-status-completed hover:bg-emerald-700 text-white px-5 py-3.5 rounded-lg font-bold shadow-sm transition-colors block text-center text-lg" onClick={() => setIsMobileMenuOpen(false)}>
-                Sign In
-              </Link>
+              {user ? (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4 px-3 py-2">
+                    <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center text-white">
+                      <User size={24} />
+                    </div>
+                    <div>
+                      <p className="font-black text-black">{user.name}</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{user.role}</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={handleLogout}
+                    className="w-full bg-red-50 text-red-600 px-5 py-3.5 rounded-lg font-bold transition-colors flex items-center justify-center gap-2"
+                  >
+                    <LogOut size={20} /> LOG OUT
+                  </button>
+                </div>
+              ) : (
+                <Link to="/signin" className="w-full bg-status-completed hover:bg-emerald-700 text-white px-5 py-3.5 rounded-lg font-bold shadow-sm transition-colors block text-center text-lg" onClick={() => setIsMobileMenuOpen(false)}>
+                  Sign In
+                </Link>
+              )}
             </div>
           </div>
         </div>
