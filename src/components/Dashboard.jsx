@@ -33,13 +33,23 @@ const Dashboard = () => {
     }
   };
 
+  const isFullWidthRole = user?.role === 'GOVERNMENT' || user?.role === 'MP' || user?.role === 'MINISTRY' || user?.role === 'ACB' || user?.role === 'CITIZEN';
+
   return (
-    <div className="min-h-screen bg-neutral-bg flex flex-col font-inter">
-      <Header />
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-        {renderDashboard()}
-      </main>
-      <Footer />
+    <div className="min-h-screen bg-[#f3f4f6] flex flex-col font-inter">
+      {!isFullWidthRole && <Header />}
+      
+      {isFullWidthRole ? (
+        <main className="flex-grow w-full">
+          {renderDashboard()}
+        </main>
+      ) : (
+        <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+          {renderDashboard()}
+        </main>
+      )}
+
+      {!isFullWidthRole && <Footer />}
     </div>
   );
 };

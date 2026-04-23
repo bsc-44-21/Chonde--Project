@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  Mail, 
-  Lock, 
-  ArrowRight, 
-  AlertCircle, 
-  ShieldCheck, 
-  CheckCircle2, 
-  User, 
-  Eye, 
-  EyeOff 
+import {
+  Mail,
+  Lock,
+  ArrowRight,
+  AlertCircle,
+  ShieldCheck,
+  CheckCircle2,
+  User,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -20,7 +20,7 @@ const SignIn = () => {
   const [role, setRole] = useState('citizen'); // 'citizen' or 'official'
   const [language, setLanguage] = useState('English');
   const [error, setError] = useState('');
-  
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ const SignIn = () => {
       {/* Left Side - Hero Section */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-blue-900">
         {/* Background Image with Overlay */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url('/auth-bg.png')" }}
         >
@@ -63,7 +63,7 @@ const SignIn = () => {
               Action.
             </h1>
             <p className="text-base sm:text-lg text-blue-100/90 mb-6 leading-relaxed">
-              Join thousands of citizens actively monitoring development projects. 
+              Join thousands of citizens actively monitoring development projects.
               Your voice ensures public funds are used effectively.
             </p>
 
@@ -103,23 +103,21 @@ const SignIn = () => {
 
             {/* Role Switcher */}
             <div className="flex bg-gray-100/80 p-1 rounded-xl mb-6">
-              <button 
+              <button
                 onClick={() => setRole('citizen')}
-                className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all ${
-                  role === 'citizen' 
-                  ? 'bg-white text-gray-900 shadow-sm' 
-                  : 'text-gray-500 hover:text-gray-700'
-                }`}
+                className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all ${role === 'citizen'
+                    ? 'bg-white text-gray-900 shadow-sm'
+                    : 'text-gray-500 hover:text-gray-700'
+                  }`}
               >
                 Citizen
               </button>
-              <button 
+              <button
                 onClick={() => setRole('official')}
-                className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all ${
-                  role === 'official' 
-                  ? 'bg-white text-gray-900 shadow-sm' 
-                  : 'text-gray-500 hover:text-gray-700'
-                }`}
+                className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all ${role === 'official'
+                    ? 'bg-white text-gray-900 shadow-sm'
+                    : 'text-gray-500 hover:text-gray-700'
+                  }`}
               >
                 Official / MP
               </button>
@@ -198,7 +196,7 @@ const SignIn = () => {
             <div className="mt-8 text-center">
               <p className="text-sm font-medium text-gray-400">
                 Don't have an account?{' '}
-                <button 
+                <button
                   onClick={() => navigate('/signup')}
                   className="text-blue-800 font-black hover:underline underline-offset-4"
                 >
@@ -210,19 +208,17 @@ const SignIn = () => {
 
           {/* Language Selector */}
           <div className="mt-8 flex justify-center items-center space-x-6">
-            <button 
+            <button
               onClick={() => setLanguage('English')}
-              className={`text-sm font-black transition-colors ${
-                language === 'English' ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'
-              }`}
+              className={`text-sm font-black transition-colors ${language === 'English' ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'
+                }`}
             >
               English
             </button>
-            <button 
+            <button
               onClick={() => setLanguage('Chichewa')}
-              className={`text-sm font-black transition-colors ${
-                language === 'Chichewa' ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'
-              }`}
+              className={`text-sm font-black transition-colors ${language === 'Chichewa' ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'
+                }`}
             >
               Chichewa
             </button>

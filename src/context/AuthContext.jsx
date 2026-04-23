@@ -13,9 +13,9 @@ export const AuthProvider = ({ children }) => {
       mockUser = { email, name: 'John Doe', role: 'CITIZEN', district: 'Lilongwe', constituency: 'Lilongwe City Center' };
     } else if (email === 'mp@gmail.com') {
       mockUser = { email, name: 'Hon. Mphepo', role: 'MP', district: 'Blantyre', constituency: 'Blantyre City Center' };
-    } else if (email === 'gvmt@gmail.com') {
+    } else if (email === 'gov@gmail.com') {
       mockUser = { email, name: 'Admin One', role: 'GOVERNMENT', department: 'Presidential Oversite' };
-    } else if (email === 'anti@gmail.com') {
+    } else if (email === 'ant@gmail.com') {
       mockUser = { email, name: 'Inv. Mwale', role: 'ACB', rank: 'Senior Investigator' };
     } else if (email === 'min@gmail.com') {
       mockUser = { email, name: 'Director Kaunda', role: 'MINISTRY', sector: 'Ministry of Education' };
