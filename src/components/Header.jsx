@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Home, FolderGit2, FileText, Bell, Menu, X } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleReportClick = (e) => {
+    e.preventDefault();
+    if (user) {
+      navigate('/dashboard');
+    } else {
+      navigate('/signin');
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 bg-neutral-card border-b border-neutral-border shadow-sm h-20">
@@ -31,10 +43,13 @@ const Header = () => {
               <FolderGit2 size={18} className="mr-2" />
               Projects
             </a>
-            <a href="/#reports" className="flex items-center text-neutral-textSec hover:text-primary-dark border-b-[3px] border-transparent hover:border-primary-light h-full transition-colors font-medium">
+            <button 
+              onClick={handleReportClick}
+              className="flex items-center text-neutral-textSec hover:text-primary-dark border-b-[3px] border-transparent hover:border-primary-light h-full transition-colors font-medium"
+            >
               <FileText size={18} className="mr-2" />
-              Reports
-            </a>
+              Report
+            </button>
           </nav>
 
           {/* Right Side: Notification & Sign In */}
@@ -80,9 +95,12 @@ const Header = () => {
             <a href="/#projects" className="flex items-center text-neutral-textMain font-medium px-3 py-3 hover:bg-neutral-bg rounded-lg transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
               <FolderGit2 size={20} className="mr-3" /> Projects
             </a>
-            <a href="/#reports" className="flex items-center text-neutral-textMain font-medium px-3 py-3 hover:bg-neutral-bg rounded-lg transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-              <FileText size={20} className="mr-3" /> Reports
-            </a>
+            <button 
+              onClick={(e) => { setIsMobileMenuOpen(false); handleReportClick(e); }}
+              className="flex items-center text-neutral-textMain font-medium px-3 py-3 hover:bg-neutral-bg rounded-lg transition-colors"
+            >
+              <FileText size={20} className="mr-3" /> Report
+            </button>
             <div className="mt-4 pt-4 border-t border-neutral-border px-1">
               <Link to="/signin" className="w-full bg-status-completed hover:bg-emerald-700 text-white px-5 py-3.5 rounded-lg font-bold shadow-sm transition-colors block text-center text-lg" onClick={() => setIsMobileMenuOpen(false)}>
                 Sign In
