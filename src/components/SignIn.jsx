@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react';
+import { 
+  Mail, 
+  Lock, 
+  ArrowRight, 
+  AlertCircle, 
+  ShieldCheck, 
+  CheckCircle2, 
+  User, 
+  Eye, 
+  EyeOff 
+} from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState('citizen'); // 'citizen' or 'official'
+  const [language, setLanguage] = useState('English');
   const [error, setError] = useState('');
+  
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -22,127 +36,194 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-bg flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-inter">
-      <div className="sm:mx-auto sm:w-full sm:max-w-lg">
-        {/* Logo & Brand */}
-        <div className="flex flex-col items-center">
-          <div className="flex items-center space-x-3 mb-6">
-            <div className="w-16 h-16 flex items-center justify-center overflow-hidden">
-              <img src="/logo.png" alt="Chonde+ Logo" className="w-full h-full object-contain" />
-            </div>
-            <span className="font-black text-3xl tracking-tighter text-black uppercase">CHONDE+</span>
+    <div className="min-h-screen flex font-inter overflow-hidden">
+      {/* Left Side - Hero Section */}
+      <div className="hidden lg:flex lg:w-1/2 relative bg-blue-900">
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/auth-bg.png')" }}
+        >
+          <div className="absolute inset-0 bg-[#1e3a8a]/90 mix-blend-multiply"></div>
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 flex flex-col justify-between p-8 w-full text-white">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <ShieldCheck size={32} className="text-white" />
+            <span className="text-2xl font-black tracking-tighter uppercase">CHONDE+</span>
           </div>
-          <h2 className="text-center text-3xl font-black text-black tracking-tight">Sign in to your account</h2>
+
+          {/* Main Headline */}
+          <div className="max-w-xl">
+            <h1 className="text-4xl sm:text-5xl font-black mb-4 leading-[1.1]">
+              Transparency.<br />
+              Accountability.<br />
+              Action.
+            </h1>
+            <p className="text-base sm:text-lg text-blue-100/90 mb-6 leading-relaxed">
+              Join thousands of citizens actively monitoring development projects. 
+              Your voice ensures public funds are used effectively.
+            </p>
+
+            {/* Feature List */}
+            <ul className="space-y-4">
+              {[
+                "Track constituency projects",
+                "Report issues anonymously",
+                "Suggest community needs"
+              ].map((item, index) => (
+                <li key={index} className="flex items-center space-x-4">
+                  <div className="bg-emerald-500 rounded-full p-1">
+                    <CheckCircle2 size={16} className="text-white" />
+                  </div>
+                  <span className="font-bold text-lg">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Bottom Branding */}
+          <div className="text-blue-200/60 text-sm font-medium">
+            Monitored by the Anti-Corruption Bureau
+          </div>
         </div>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
-        <div className="bg-white py-10 px-6 shadow-2xl sm:rounded-3xl border border-neutral-border sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl flex items-center gap-3 text-sm font-bold animate-shake">
-                <AlertCircle size={18} />
-                {error}
-              </div>
-            )}
-            
-            <div>
-              <label htmlFor="email" className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">
-                Email address
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                  <Mail size={18} />
-                </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full pl-11 px-3 py-4 border border-gray-100 rounded-2xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-dark focus:border-transparent sm:text-sm font-bold text-black bg-gray-50/50"
-                  placeholder="test@gmail.com"
-                />
-              </div>
+      {/* Right Side - Sign In Section */}
+      <div className="w-full lg:w-1/2 bg-[#f8faff] flex flex-col items-center justify-center p-4 sm:p-8 relative">
+        <div className="w-full max-w-[440px]">
+          {/* Sign In Card */}
+          <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.03)] p-6 sm:p-10 border border-gray-100">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-black text-gray-900 mb-1">Welcome Back</h2>
+              <p className="text-sm text-gray-400 font-medium">Sign in to access your dashboard</p>
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                  <Lock size={18} />
-                </div>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full pl-11 px-3 py-4 border border-gray-100 rounded-2xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-dark focus:border-transparent sm:text-sm font-bold text-black bg-gray-50/50"
-                  placeholder="12345"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-black focus:ring-black border-gray-300 rounded"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-black font-bold">
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <a href="#" className="font-bold text-primary-light hover:text-black transition-colors">
-                  Forgot password?
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-4 px-4 border border-transparent rounded-2xl shadow-xl text-base font-black text-white bg-black hover:bg-status-completed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-all transform hover:-translate-y-1 active:scale-95 uppercase tracking-widest"
+            {/* Role Switcher */}
+            <div className="flex bg-gray-100/80 p-1 rounded-xl mb-6">
+              <button 
+                onClick={() => setRole('citizen')}
+                className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all ${
+                  role === 'citizen' 
+                  ? 'bg-white text-gray-900 shadow-sm' 
+                  : 'text-gray-500 hover:text-gray-700'
+                }`}
               >
-                SIGN IN NOW <ArrowRight size={20} className="ml-2" />
+                Citizen
+              </button>
+              <button 
+                onClick={() => setRole('official')}
+                className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all ${
+                  role === 'official' 
+                  ? 'bg-white text-gray-900 shadow-sm' 
+                  : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                Official / MP
               </button>
             </div>
-          </form>
 
-          <div className="mt-6 text-center">
-             <p className="text-sm text-gray-500 font-medium">
-              Don't have an account?{' '}
-              <a href="/signup" className="text-status-completed hover:text-emerald-700 font-black transition-colors underline underline-offset-4 decoration-2">
-                Create a new accountability profile
-              </a>
-            </p>
-          </div>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {error && (
+                <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl flex items-center gap-3 text-sm font-bold">
+                  <AlertCircle size={18} />
+                  {error}
+                </div>
+              )}
 
-          <div className="mt-10">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-100"></div>
+              {/* Email/Phone Input */}
+              <div className="space-y-3">
+                <label className="block text-xs font-black text-gray-900 uppercase tracking-widest">
+                  Phone Number or Email
+                </label>
+                <div className="relative group">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
+                    <User size={20} />
+                  </div>
+                  <input
+                    type="text"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full bg-white border border-gray-200 rounded-xl py-3.5 pl-11 pr-4 text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition-all font-bold text-sm"
+                    placeholder="Enter your details..."
+                  />
+                </div>
               </div>
-              <div className="relative flex justify-center text-[10px] uppercase tracking-[0.2em] font-black">
-                <span className="px-4 bg-white text-gray-300">Authorized Access Only</span>
+
+              {/* Password Input */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <label className="block text-xs font-black text-gray-900 uppercase tracking-widest">
+                    Password
+                  </label>
+                  <button type="button" className="text-xs font-black text-blue-800 hover:text-blue-900">
+                    Forgot Password?
+                  </button>
+                </div>
+                <div className="relative group">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
+                    <Lock size={20} />
+                  </div>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full bg-white border border-gray-200 rounded-xl py-3.5 pl-11 pr-11 text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition-all font-bold text-sm"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               </div>
+
+              {/* Sign In Button */}
+              <button
+                type="submit"
+                className="w-full bg-[#1e3a8a] text-white py-4 rounded-xl font-black text-base shadow-lg shadow-blue-900/10 hover:bg-blue-900 transition-all active:scale-[0.98] flex items-center justify-center space-x-2"
+              >
+                <span>Sign In</span>
+                <ArrowRight size={20} />
+              </button>
+            </form>
+
+            <div className="mt-8 text-center">
+              <p className="text-sm font-medium text-gray-400">
+                Don't have an account?{' '}
+                <button className="text-blue-800 font-black hover:underline underline-offset-4">
+                  Register here
+                </button>
+              </p>
             </div>
           </div>
-        </div>
-        
-        <div className="mt-10 text-center">
-          <a href="/" className="text-xs font-black text-gray-400 hover:text-black transition-colors flex items-center justify-center uppercase tracking-widest">
-             Return to Public Dashboard
-          </a>
+
+          {/* Language Selector */}
+          <div className="mt-8 flex justify-center items-center space-x-6">
+            <button 
+              onClick={() => setLanguage('English')}
+              className={`text-sm font-black transition-colors ${
+                language === 'English' ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'
+              }`}
+            >
+              English
+            </button>
+            <button 
+              onClick={() => setLanguage('Chichewa')}
+              className={`text-sm font-black transition-colors ${
+                language === 'Chichewa' ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'
+              }`}
+            >
+              Chichewa
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -150,3 +231,4 @@ const SignIn = () => {
 };
 
 export default SignIn;
+
