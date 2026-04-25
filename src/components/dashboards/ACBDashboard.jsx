@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { 
   ShieldAlert, Database, Siren, Cpu, Send, FolderOpen, Filter, Search,
   Activity, Image as ImageIcon, Building, ChevronDown, CheckCircle2,
@@ -6,6 +7,13 @@ import {
 } from 'lucide-react';
 
 const ACBDashboard = ({ user }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentTab = searchParams.get('tab') || 'active-cases';
+
+  const setTab = (tab) => {
+    setSearchParams({ tab });
+  };
+
   return (
     <div className="bg-[#f3f4f6] min-h-screen pb-12 font-inter -mt-12 mx-[-1rem] sm:mx-[-1.5rem] lg:mx-[-2rem]">
       {/* Top Header */}
@@ -13,9 +21,7 @@ const ACBDashboard = ({ user }) => {
         <div className="flex items-center gap-12 h-full">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded bg-[#dc2626] flex items-center justify-center">
-              <ShieldAlert size={18} className="text-white" />
-            </div>
+            <img src="/logo.png" alt="Chonde+ Logo" className="w-10 h-10 object-contain bg-white rounded-xl p-1 shadow-sm" />
             <div className="flex flex-col">
               <span className="text-white font-black text-[17px] leading-none tracking-tight uppercase">CHONDE+</span>
               <span className="text-red-500 text-[9px] font-black tracking-widest uppercase mt-0.5">ANTI-CORRUPTION BUREAU</span>
@@ -24,16 +30,16 @@ const ACBDashboard = ({ user }) => {
 
           {/* Navigation */}
           <nav className="hidden md:flex h-full gap-2">
-            <button className="h-full px-5 bg-[#1e293b] text-white font-bold text-sm transition-colors flex items-center rounded-t-lg mt-2 pt-1">
+            <button onClick={() => setTab('active-cases')} className={`h-full px-5 font-bold text-sm transition-colors flex items-center mt-2 pt-1 ${currentTab === 'active-cases' ? 'bg-[#1e293b] text-white rounded-t-lg' : 'text-gray-400 hover:text-white'}`}>
               Active Cases
             </button>
-            <button className="h-full px-5 text-gray-400 hover:text-white font-bold text-sm transition-colors flex items-center mt-2 pt-1">
+            <button onClick={() => setTab('complaint-database')} className={`h-full px-5 font-bold text-sm transition-colors flex items-center mt-2 pt-1 ${currentTab === 'complaint-database' ? 'bg-[#1e293b] text-white rounded-t-lg' : 'text-gray-400 hover:text-white'}`}>
               Complaint Database
             </button>
-            <button className="h-full px-5 text-gray-400 hover:text-white font-bold text-sm transition-colors flex items-center mt-2 pt-1">
+            <button onClick={() => setTab('ai-intelligence')} className={`h-full px-5 font-bold text-sm transition-colors flex items-center mt-2 pt-1 ${currentTab === 'ai-intelligence' ? 'bg-[#1e293b] text-white rounded-t-lg' : 'text-gray-400 hover:text-white'}`}>
               AI Intelligence
             </button>
-            <button className="h-full px-5 text-gray-400 hover:text-white font-bold text-sm transition-colors flex items-center mt-2 pt-1">
+            <button onClick={() => setTab('government-directives')} className={`h-full px-5 font-bold text-sm transition-colors flex items-center mt-2 pt-1 ${currentTab === 'government-directives' ? 'bg-[#1e293b] text-white rounded-t-lg' : 'text-gray-400 hover:text-white'}`}>
               Government Directives
             </button>
           </nav>
@@ -52,7 +58,9 @@ const ACBDashboard = ({ user }) => {
       </header>
 
       {/* Main Content */}
-      <div className="flex-grow"></div>
+      <div className="flex-grow flex items-center justify-center">
+        <h2 className="text-2xl font-bold text-gray-400 capitalize">{currentTab.replace('-', ' ')} Page</h2>
+      </div>
     </div>
   );
 };

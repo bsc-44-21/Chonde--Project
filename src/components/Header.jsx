@@ -20,11 +20,11 @@ const Header = () => {
         <div className="flex justify-between items-center h-full">
           
           {/* Left Side: Logo */}
-          <Link to="/" className="flex-shrink-0 flex items-center cursor-pointer">
-            <div className="w-10 h-10 flex items-center justify-center mr-3 bg-white rounded-xl">
-              <img src="/logo.png" alt="Chonde+ CDF Logo" className="w-8 h-8 object-contain" />
+          <Link to="/" className="flex-shrink-0 flex items-center cursor-pointer group">
+            <div className="w-11 h-11 flex items-center justify-center mr-3 bg-white rounded-xl shadow-md transform group-hover:scale-105 transition-all duration-200">
+              <img src="/logo.png" alt="Chonde+ Logo" className="w-9 h-9 object-contain" />
             </div>
-            <span className="font-black text-2xl tracking-tight text-white uppercase">CHONDE+</span>
+            <span className="font-black text-2xl tracking-tight text-white uppercase group-hover:text-blue-400 transition-colors">CHONDE+</span>
           </Link>
 
           {/* Center Navigation */}

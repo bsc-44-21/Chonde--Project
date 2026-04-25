@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { 
   ShieldCheck, FolderOpen, AlertTriangle, CheckCircle2,
   Lightbulb, Filter, Flag, MessageSquare, Plus,
@@ -56,6 +57,13 @@ const initialNeeds = [
 ];
 
 const CitizenDashboard = ({ user }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentTab = searchParams.get('tab') || 'my-constituency';
+
+  const setTab = (tab) => {
+    setSearchParams({ tab });
+  };
+
   const [activeTab, setActiveTab] = useState('active'); // 'active' or 'success'
   const [filter, setFilter] = useState('All');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -130,19 +138,19 @@ const CitizenDashboard = ({ user }) => {
         <div className="flex items-center gap-12 h-full">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <ShieldCheck size={24} className="text-white" />
+            <img src="/logo.png" alt="Chonde+ Logo" className="w-8 h-8 object-contain bg-white rounded-lg p-1 shadow-sm" />
             <span className="text-white font-black text-[18px] leading-none tracking-tight uppercase">CHONDE+</span>
           </div>
 
           {/* Navigation */}
           <nav className="hidden md:flex h-full gap-2 items-center">
-            <button className="px-5 py-1.5 bg-[#3b82f6] text-white font-bold text-[13px] transition-colors rounded-full shadow-sm border border-[#60a5fa]">
+            <button onClick={() => setTab('my-constituency')} className={`px-5 py-1.5 font-bold text-[13px] transition-colors ${currentTab === 'my-constituency' ? 'bg-[#3b82f6] text-white rounded-full shadow-sm border border-[#60a5fa]' : 'text-blue-200 hover:text-white'}`}>
               My Constituency
             </button>
-            <button className="px-5 text-blue-200 hover:text-white font-bold text-[13px] transition-colors">
+            <button onClick={() => setTab('national-view')} className={`px-5 py-1.5 font-bold text-[13px] transition-colors ${currentTab === 'national-view' ? 'bg-[#3b82f6] text-white rounded-full shadow-sm border border-[#60a5fa]' : 'text-blue-200 hover:text-white'}`}>
               National View
             </button>
-            <button className="px-5 text-blue-200 hover:text-white font-bold text-[13px] transition-colors">
+            <button onClick={() => setTab('my-reports')} className={`px-5 py-1.5 font-bold text-[13px] transition-colors ${currentTab === 'my-reports' ? 'bg-[#3b82f6] text-white rounded-full shadow-sm border border-[#60a5fa]' : 'text-blue-200 hover:text-white'}`}>
               My Reports
             </button>
           </nav>
@@ -161,7 +169,9 @@ const CitizenDashboard = ({ user }) => {
       </header>
 
       {/* Main Content */}
-      <div className="flex-grow"></div>
+      <div className="flex-grow flex items-center justify-center">
+        <h2 className="text-2xl font-bold text-gray-400 capitalize">{currentTab.replace('-', ' ')} Page</h2>
+      </div>
     </div>
   );
 };

@@ -1,10 +1,18 @@
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { 
   ShieldCheck, AlertTriangle, MessageSquare, Clock, PlusCircle,
   Filter, ChevronUp, ChevronDown, Activity, Edit2, Users
 } from 'lucide-react';
 
 const MPDashboard = ({ user }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentTab = searchParams.get('tab') || 'overview';
+
+  const setTab = (tab) => {
+    setSearchParams({ tab });
+  };
+
   return (
     <div className="bg-[#f8fafc] min-h-screen pb-12 font-inter -mt-12 mx-[-1rem] sm:mx-[-1.5rem] lg:mx-[-2rem]">
       {/* Top Header */}
@@ -12,19 +20,19 @@ const MPDashboard = ({ user }) => {
         <div className="flex items-center gap-12 h-full">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <ShieldCheck size={20} className="text-blue-500" />
+            <img src="/logo.png" alt="Chonde+ Logo" className="w-8 h-8 object-contain bg-white rounded-lg p-1 shadow-sm" />
             <span className="text-white font-black text-lg leading-none tracking-tight uppercase">CHONDE+ <span className="text-gray-400 text-[10px] tracking-widest font-bold ml-1">MP PORTAL</span></span>
           </div>
 
           {/* Navigation */}
           <nav className="hidden md:flex h-full gap-2">
-            <button className="h-full px-5 bg-[#2a3044] text-white font-bold text-sm transition-colors flex items-center rounded-t-lg mt-2 pt-1">
+            <button onClick={() => setTab('overview')} className={`h-full px-5 font-bold text-sm transition-colors flex items-center mt-2 pt-1 ${currentTab === 'overview' ? 'bg-[#2a3044] text-white rounded-t-lg' : 'text-gray-400 hover:text-white'}`}>
               Overview
             </button>
-            <button className="h-full px-5 text-gray-400 hover:text-white font-bold text-sm transition-colors flex items-center mt-2 pt-1">
+            <button onClick={() => setTab('manage-projects')} className={`h-full px-5 font-bold text-sm transition-colors flex items-center mt-2 pt-1 ${currentTab === 'manage-projects' ? 'bg-[#2a3044] text-white rounded-t-lg' : 'text-gray-400 hover:text-white'}`}>
               Manage Projects
             </button>
-            <button className="h-full px-5 text-gray-400 hover:text-white font-bold text-sm transition-colors flex items-center mt-2 pt-1">
+            <button onClick={() => setTab('community-voices')} className={`h-full px-5 font-bold text-sm transition-colors flex items-center mt-2 pt-1 ${currentTab === 'community-voices' ? 'bg-[#2a3044] text-white rounded-t-lg' : 'text-gray-400 hover:text-white'}`}>
               Community Voices
             </button>
           </nav>
@@ -43,7 +51,9 @@ const MPDashboard = ({ user }) => {
       </header>
 
       {/* Main Content */}
-      <div className="flex-grow"></div>
+      <div className="flex-grow flex items-center justify-center">
+        <h2 className="text-2xl font-bold text-gray-400 capitalize">{currentTab.replace('-', ' ')} Page</h2>
+      </div>
     </div>
   );
 };
