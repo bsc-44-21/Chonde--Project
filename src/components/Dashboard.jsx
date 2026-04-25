@@ -49,7 +49,7 @@ const Dashboard = () => {
         </main>
       )}
 
-      {!isFullWidthRole && <Footer />}
+      <Footer />
     </div>
   );
 };
