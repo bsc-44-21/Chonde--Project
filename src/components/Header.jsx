@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Home, FolderGit2, FileText, Bell, Menu, X, User, LogOut, LayoutDashboard, Map, Info } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -7,6 +7,9 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
     logout();
@@ -29,16 +32,16 @@ const Header = () => {
 
           {/* Center Navigation */}
           <nav className="hidden md:flex space-x-8 items-center h-full">
-            <Link to="/" className="flex items-center text-white font-bold text-sm hover:text-gray-300 transition-colors">
+            <Link to="/" className={`flex items-center font-bold text-sm h-full border-b-2 transition-all ${isActive('/') ? 'text-white border-white' : 'text-gray-300 border-transparent hover:text-white'}`}>
               Home
             </Link>
-            <a href="/#projects" className="flex items-center text-gray-300 hover:text-white font-bold text-sm transition-colors">
+            <a href="/#projects" className="flex items-center text-gray-300 hover:text-white font-bold text-sm h-full border-b-2 border-transparent transition-all">
               All Projects
             </a>
-            <a href="#" className="flex items-center text-gray-300 hover:text-white font-bold text-sm transition-colors">
+            <a href="#" className="flex items-center text-gray-300 hover:text-white font-bold text-sm h-full border-b-2 border-transparent transition-all">
               Constituency Map
             </a>
-            <a href="#" className="flex items-center text-gray-300 hover:text-white font-bold text-sm transition-colors">
+            <a href="#" className="flex items-center text-gray-300 hover:text-white font-bold text-sm h-full border-b-2 border-transparent transition-all">
               About Us
             </a>
           </nav>

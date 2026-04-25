@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import DashboardFooter from './DashboardFooter';
 import { useAuth } from '../context/AuthContext';
 import CitizenDashboard from './dashboards/CitizenDashboard';
 import MPDashboard from './dashboards/MPDashboard';
@@ -36,7 +37,7 @@ const Dashboard = () => {
   const isFullWidthRole = user?.role === 'GOVERNMENT' || user?.role === 'MP' || user?.role === 'MINISTRY' || user?.role === 'ACB' || user?.role === 'CITIZEN';
 
   return (
-    <div className="min-h-screen bg-[#f3f4f6] flex flex-col font-inter">
+    <div className="min-h-screen bg-[#f8fafc] flex flex-col font-inter overflow-x-hidden">
       {!isFullWidthRole && <Header />}
       
       {isFullWidthRole ? (
@@ -49,7 +50,7 @@ const Dashboard = () => {
         </main>
       )}
 
-      <Footer />
+      {isFullWidthRole ? <DashboardFooter /> : <Footer />}
     </div>
   );
 };

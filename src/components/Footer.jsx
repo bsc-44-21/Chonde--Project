@@ -43,6 +43,11 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* National Motto */}
+        <div className="flex justify-center mb-8 border-t border-[#2a3044]/50 pt-8">
+          <p className="text-gray-500/30 italic font-serif tracking-[0.4em] text-xs uppercase">Unity and Freedom</p>
+        </div>
+
         {/* Bottom Bar */}
         <div className="border-t border-[#2a3044] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-gray-400">
           <p>&copy; 2026 CHONDE+ Platform. A national accountability initiative.</p>
